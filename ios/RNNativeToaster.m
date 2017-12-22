@@ -1,4 +1,7 @@
 
+#import <UIKit/UIKit.h>
+#import <React/RCTLog.h>
+#import <React/RCTBridgeModule.h>
 #import "RNNativeToaster.h"
 
 @implementation RNNativeToaster
