@@ -16,41 +16,26 @@ NSInteger const RNNativeToasterGravityTop = 3;
 @end
 
 @implementation RNNativeToaster {
-    CGFloat _keyOffset;
 }
 
+/*
+ * Objective C sınıfı init ediliyor.
+ *
+ *
+ */
 - (instancetype)init {
-    if (self = [super init]) {
-        _keyOffset = 0;
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWasShown:)
-                                                     name:UIKeyboardDidShowNotification
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillHiden:)
-                                                     name:UIKeyboardWillHideNotification
-                                                   object:nil];
-    }
+    self = [super init]
     return self;
-}
-
-- (void)keyboardWasShown:(NSNotification *)notification {
-    
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    int height = MIN(keyboardSize.height,keyboardSize.width);
-    int width = MAX(keyboardSize.height,keyboardSize.width);
-    
-    _keyOffset = height;
-}
-
-- (void)keyboardWillHiden:(NSNotification *)notification {
-    _keyOffset = 0;
 }
 
 
 RCT_EXPORT_MODULE()
 
+/**
+ * Native taraftaki constant değerlerini React Native tarafında
+ * kullanabilmek için export ederiz.
+ *
+ */
 - (NSDictionary *)constantsToExport {
     return @{
              @"SHORT": [NSNumber numberWithDouble:RNNativeToasterShortDuration],
@@ -97,15 +82,15 @@ RCT_EXPORT_METHOD(showWithGravity:(NSString *)msg duration:(double)duration grav
 
 - (void)_show:(NSString *)msg duration:(NSTimeInterval)duration gravity:(NSInteger)gravity customStyle:(NSDictionary *)customStyle {
     dispatch_async(dispatch_get_main_queue(), ^{
-        //UIView *root = [[[[[UIApplication sharedApplication] delegate] window] rootViewController] view];
         UIViewController *ctrl = [self visibleViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
         UIView *root = [ctrl view];
         CGRect bound = root.bounds;
-        bound.size.height -= _keyOffset;
+        
         if (bound.size.height > RNNativeToasterBottomOffset*2) {
             bound.origin.y += RNNativeToasterBottomOffset;
             bound.size.height -= RNNativeToasterBottomOffset*2;
         }
+        
         UIView *view = [[UIView alloc] initWithFrame:bound];
         view.userInteractionEnabled = NO;
         [root addSubview:view];
