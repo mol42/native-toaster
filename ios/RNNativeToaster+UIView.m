@@ -1,4 +1,4 @@
-#import "Toast+UIView.h"
+#import "RNNativeToaster+UIView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 

@@ -1,8 +1,8 @@
 
 #import <UIKit/UIKit.h>
 #import <React/RCTLog.h>
-#import <React/RCTBridgeModule.h>
 #import "RNNativeToaster.h"
+#import "RNNativeToaster+UIView.h"
 
 @implementation RNNativeToaster
 
@@ -10,7 +10,7 @@
 {
     return dispatch_get_main_queue();
 }
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE(RNNativeToaster)
 
 RCT_EXPORT_METHOD(show:(NSDictionary *)options) {
     NSString *message  = [options objectForKey:@"message"];

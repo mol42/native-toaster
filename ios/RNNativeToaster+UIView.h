@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@interface UIView (Toast)
+@interface UIView (RNNativeToaster)
 
 // each makeToast method creates a view and displays it as toast
 - (void)makeToast:(NSString *)message;
