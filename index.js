@@ -4,93 +4,22 @@ import { NativeModules } from 'react-native';
 
 const { RNNativeToaster } = NativeModules;
 
-const RCTToast = RNNativeToaster;
-const Toast = {};
+var ToastNative = {
+    //Toast duration constants
+    SHORT: RNNativeToaster.SHORT,
+    LONG: RNNativeToaster.LONG,
 
-const optionsBuilder = function () {
-  // defaults
-    let message = null;
-    let duration = 'short';
-    let position = 'center';
-    let addPixelsY = 0;
+    // Toast gravity constants
+    TOP: RNNativeToaster.TOP,
+    BOTTOM: RNNativeToaster.BOTTOM,
+    CENTER: RNNativeToaster.CENTER,
 
-    return {
-        withMessage: function (m) {
-            message = m;
-            return this;
-        },
-
-        withDuration: function (d) {
-            duration = d;
-            return this;
-        },
-
-        withPosition: function (p) {
-            position = p;
-            return this;
-        },
-
-        withAddPixelsY: function (y) {
-            addPixelsY = y;
-            return this;
-        },
-
-        build: function () {
-            return {
-                message: message,
-                duration: duration,
-                position: position,
-                addPixelsY: addPixelsY,
-            };
-        },
-    };
+    show: function (message,
+                    duration,
+                    position,
+                    styles) {
+        RNNativeToaster.show(message || "This is a toast message", duration || ToastNative.SHORT, position || ToastNative.TOP, styles || {});
+    }
 };
 
-const showWithOptions = function (options) {
-    RCTToast.show(options);
-};
-
-const showToast = function (message, duration, position) {
-    showWithOptions(
-      optionsBuilder()
-          .withMessage(message || '未知数据')
-          .withDuration(duration)
-          .withPosition(position)
-          .build()
-      );
-};
-
-Toast.showShortTop = function (message) {
-    showToast(message, 'short', 'top');
-};
-
-Toast.showShortCenter = function (message) {
-    showToast(message, 'short', 'center');
-};
-
-Toast.showShortBottom = function (message) {
-    showToast(message, 'short', 'bottom');
-};
-
-Toast.showLongTop = function (message) {
-    showToast(message, 'long', 'top');
-};
-
-Toast.showLongCenter = function (message) {
-    showToast(message, 'long', 'center');
-};
-
-Toast.showLongBottom = function (message) {
-    showToast(message, 'long', 'bottom');
-};
-
-Toast.show = function (message) {
-    showToast(message, 'short', 'bottom');
-};
-
-Toast.hide = function () {
-    RCTToast.hide();
-};
-
-module.exports = Toast;
-//export default RNNativeToaster;
+export default ToastNative;
