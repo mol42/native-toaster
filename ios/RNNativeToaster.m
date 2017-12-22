@@ -24,7 +24,7 @@ NSInteger const RNNativeToasterGravityTop = 3;
  *
  */
 - (instancetype)init {
-    self = [super init]
+    self = [super init];
     return self;
 }
 
